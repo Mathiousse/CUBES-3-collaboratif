@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+*/node_modules/
+**/vendor/
+
+# Symfony / PHP
+**/var/cache/
+**/var/log/
+**/var/
+
+# Environment Variables
+.env
+*.env
+
+# Build folders
+/build
+/dist
+
+# IDE & OS files
+.DS_Store
+.vscode/
+

@@ -1,0 +1,54 @@
+image: node:20
+
+stages:
+  - install
+  - test
+  - security
+
+variables:
+  MONGO_URI: "mongodb://mongo:27017/test-db"
+  JWT_SECRET: "test_secret"
+
+services:
+  - mongo:latest
+  - postgres:latest
+
+cache:
+  paths:
+    - node_modules/
+    - auth-api/node_modules/
+    - commande-api/node_modules/
+    - api-gateway/node_modules/
+    - frontend/node_modules/
+
+install_dependencies:
+  stage: install
+  script:
+    - npm install
+    - cd auth-api && npm ci
+    - cd ../commande-api && npm ci
+    - cd ../api-gateway && npm ci
+    - cd ../frontend && npm ci --legacy-peer-deps
+
+integration_tests:
+  stage: test
+  script:
+    # Re-install is needed if cache isn't configured perfectly, but assuming cache works:
+    - npm install 
+    - cd auth-api && npm ci
+    - cd ../commande-api && npm ci
+    - cd ../api-gateway && npm ci
+    - cd ..
+    - node test-integration.js
+
+frontend_build:
+  stage: test
+  script:
+    - cd frontend
+    - npm ci --legacy-peer-deps
+    - npm run build
+
+security_scan:
+  stage: security
+  script:
+    - npm audit --audit-level=high

@@ -1,0 +1,83 @@
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-element-wrapper {
+  padding: 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.card-element-wrapper:focus-within {
+  border-color: #0f172a;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+}
+
+.error-message {
+  padding: 12px;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.cancel-btn,
+.pay-btn {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.cancel-btn:hover {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.pay-btn {
+  background: #0f172a;
+  /* Solid Primary */
+  color: white;
+}
+
+.pay-btn:hover:not(:disabled) {
+  background: #1e293b;
+  transform: translateY(-1px);
+}
+
+.pay-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #94a3b8;
+}
+
+.test-card-info {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 0;
+  border: 1px solid #f1f5f9;
+}

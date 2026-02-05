@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # Service 1: Authentication API
+  auth-api:
+    build: ./auth-api
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URI=mongodb://auth-db:27017/auth
+      - JWT_SECRET=BdpuVPDVBFEHBArnkaNJRMEAFMPNVDovnjvbMPJBDQDPViJBV
+    depends_on:
+      - auth-db
+    volumes:
+      - ./auth-api:/app
+      - /app/node_modules
+
+  auth-db:
+    image: mongo:latest
+    volumes:
+      - auth_data:/data/db
+
+  # Service 2: Logistics API (Symfony + PostgreSQL)
+  logistique-api:
+    build: ./logistique-api
+    ports:
+      - "3002:80"
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=1
+      - DATABASE_URL=postgresql://logistics_user:logistics_pass@logistique-db:5432/logistics_db?serverVersion=15&charset=utf8
+    depends_on:
+      - logistique-db
+
+  logistique-db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=logistics_db
+      - POSTGRES_USER=logistics_user
+      - POSTGRES_PASSWORD=logistics_pass
+    volumes:
+      - logistique_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Service 3: Order API
+  commande-api:
+    build: ./commande-api
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - MONGO_URI=mongodb://commande-db:27017/orders
+      - JWT_SECRET=BdpuVPDVBFEHBArnkaNJRMEAFMPNVDovnjvbMPJBDQDPViJBV
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY:-sk_test_YOUR_KEY_HERE}
+    depends_on:
+      - commande-db
+    volumes:
+      - ./commande-api:/app
+      - /app/node_modules
+
+  commande-db:
+    image: mongo:latest
+    volumes:
+      - commande_data:/data/db
+
+  # Service 4: API Gateway
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - AUTH_API_URL=http://auth-api:3001
+      - LOGISTIQUE_API_URL=http://logistique-api:80
+      - COMMANDE_API_URL=http://commande-api:3003
+
+  # Service 5: Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080/api
+      - REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_51SPKQcPZCiOqc0pUajNftFBGv7Zu2KKUB4TCD9KucmdpYeLejb86p6DQUsN5UUlMEG5Kz8ichicHCaXShHqnJSCT00pWWrHNTP
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    stdin_open: true
+    tty: true
+
+volumes:
+  auth_data:
+  logistique_data:
+  commande_data:
+
+

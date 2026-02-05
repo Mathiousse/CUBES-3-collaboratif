@@ -1,0 +1,76 @@
+name: Good Food CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: logistics_user
+          POSTGRES_PASSWORD: logistics_pass
+          POSTGRES_DB: logistics_db
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    # Backend Build & Test
+    - name: Install Auth API Dependencies
+      run: |
+        cd auth-api
+        npm ci
+    
+    - name: Install Commande API Dependencies
+      run: |
+        cd commande-api
+        npm ci
+
+    - name: Install API Gateway Dependencies
+      run: |
+        cd api-gateway
+        npm ci
+
+    # Root dependencies for integration tests
+    - name: Install Root Dependencies
+      run: npm install
+
+    - name: Run Security Audit
+      run: npm audit --audit-level=high
+
+    - name: Run Backend Integration Tests
+      env:
+        MONGO_URI: mongodb://localhost:27017/test-db
+        JWT_SECRET: test_secret
+        STRIPE_SECRET_KEY: sk_test_mock
+      run: node test-integration.js
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Frontend Dependencies
+      run: |
+        cd frontend
+        npm ci --legacy-peer-deps
+    - name: Build Frontend
+      run: |
+        cd frontend
+        npm run build

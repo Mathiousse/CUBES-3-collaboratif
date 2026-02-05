@@ -1,0 +1,30 @@
+{
+  "name": "cubes-3-collaboratif",
+  "version": "1.0.0",
+  "description": "A full-stack, containerized, microservices-based food delivery application built with React, Node.js, Express, MongoDB, and Docker.",
+  "main": "test-integration.js",
+  "scripts": {
+    "test": "npm run test:integration",
+    "test:integration": "node test-integration.js",
+    "test:auth": "cd auth-api && npm test",
+    "test:logistics": "cd logistique-api && npm test",
+    "test:orders": "cd commande-api && npm test",
+    "test:frontend": "cd frontend && npm test",
+    "test:frontend:watch": "cd frontend && npm run test:watch",
+    "test:frontend:coverage": "cd frontend && npm run test:coverage",
+    "test:frontend:e2e": "node test-frontend-e2e.js",
+    "test:all-units": "npm run test:auth && npm run test:logistics && npm run test:orders",
+    "test:all": "npm run test:all-units && npm run test:frontend && npm run test:integration && npm run test:frontend:e2e",
+    "setup": "node setup-env.js",
+    "verify": "node verify-setup.js",
+    "docker:up": "docker-compose up --build",
+    "docker:down": "docker-compose down -v",
+    "docker:logs": "docker-compose logs -f"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.13.1"
+  }
+}
