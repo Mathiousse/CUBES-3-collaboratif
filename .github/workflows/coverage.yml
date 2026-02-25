@@ -1,0 +1,114 @@
+name: Test Coverage Report
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: logistics_user
+          POSTGRES_PASSWORD: logistics_pass
+          POSTGRES_DB: logistics_db
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    # Auth API Coverage
+    - name: Generate Auth API Coverage
+      run: |
+        cd auth-api
+        npm ci
+        npm run test:coverage
+      env:
+        MONGO_URI: mongodb://localhost:27017/test-db
+        JWT_SECRET: test_secret
+
+    - name: Upload Auth API Coverage
+      uses: actions/upload-artifact@v3
+      with:
+        name: auth-coverage
+        path: auth-api/coverage/
+
+    # Commande API Coverage
+    - name: Generate Commande API Coverage
+      run: |
+        cd commande-api
+        npm ci
+        npm run test:coverage
+      env:
+        MONGO_URI: mongodb://localhost:27017/test-db
+        JWT_SECRET: test_secret
+        STRIPE_SECRET_KEY: sk_test_mock
+
+    - name: Upload Commande API Coverage
+      uses: actions/upload-artifact@v3
+      with:
+        name: commande-coverage
+        path: commande-api/coverage/
+
+    # Frontend Coverage
+    - name: Generate Frontend Coverage
+      run: |
+        cd frontend
+        npm ci --legacy-peer-deps
+        npm run test:coverage
+
+    - name: Upload Frontend Coverage
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-coverage
+        path: frontend/coverage/
+
+    # Coverage Summary
+    - name: Generate Coverage Summary
+      run: |
+        echo "## 📊 Test Coverage Report" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Auth API" >> $GITHUB_STEP_SUMMARY
+        if [ -f auth-api/coverage/lcov-report/index.html ]; then
+          echo "✅ Coverage generated" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ No coverage data" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Commande API" >> $GITHUB_STEP_SUMMARY
+        if [ -f commande-api/coverage/lcov-report/index.html ]; then
+          echo "✅ Coverage generated" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ No coverage data" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Frontend" >> $GITHUB_STEP_SUMMARY
+        if [ -f frontend/coverage/lcov-report/index.html ]; then
+          echo "✅ Coverage generated" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ No coverage data" >> $GITHUB_STEP_SUMMARY
+        fi
+
+    # Upload to Codecov (optional - requires Codecov token)
+    - name: Upload to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        files: ./auth-api/coverage/lcov.info,./commande-api/coverage/lcov.info,./frontend/coverage/lcov.info
+        flags: unittests
+        name: cubes3-coverage
+        fail_ci_if_error: false

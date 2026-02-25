@@ -62,6 +62,15 @@ jobs:
         STRIPE_SECRET_KEY: sk_test_mock
       run: node test-integration.js
 
+    # Coverage Reports
+    - name: Generate Coverage Reports
+      run: |
+        cd auth-api && npm run test:coverage
+        cd ../commande-api && npm run test:coverage
+      env:
+        MONGO_URI: mongodb://localhost:27017/test-db
+        JWT_SECRET: test_secret
+
   build-frontend:
     runs-on: ubuntu-latest
     steps:
@@ -74,3 +83,34 @@ jobs:
       run: |
         cd frontend
         npm run build
+    - name: Test Frontend with Coverage
+      run: |
+        cd frontend
+        npm run test:coverage
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Run Trivy Container Scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'table'
+        exit-code: '0'
+        severity: 'CRITICAL,HIGH'
+
+  performance-test:
+    runs-on: ubuntu-latest
+    needs: [build-and-test]
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup k6
+      uses: grafana/setup-k6-action@v1
+    
+    - name: Run Performance Tests
+      run: k6 run performance-test.js
+      continue-on-error: true  # Don't fail the build on perf test failures

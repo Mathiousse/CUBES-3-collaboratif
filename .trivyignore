@@ -1,0 +1,32 @@
+# Container Security Scan Script
+# Run locally: ./container-scan.sh
+
+echo "🔍 Starting Container Security Scan..."
+echo ""
+
+# Scan all Dockerfiles
+echo "📦 Scanning Dockerfiles..."
+docker run --rm -v $(pwd):/app aquasec/trivy:latest config /app
+
+# Scan auth-api
+echo ""
+echo "🔐 Scanning Auth API..."
+docker run --rm -v $(pwd)/auth-api:/app aquasec/trivy:latest fs /app --severity HIGH,CRITICAL
+
+# Scan commande-api
+echo ""
+echo "📝 Scanning Commande API..."
+docker run --rm -v $(pwd)/commande-api:/app aquasec/trivy:latest fs /app --severity HIGH,CRITICAL
+
+# Scan api-gateway
+echo ""
+echo "🚪 Scanning API Gateway..."
+docker run --rm -v $(pwd)/api-gateway:/app aquasec/trivy:latest fs /app --severity HIGH,CRITICAL
+
+# Scan frontend
+echo ""
+echo "🎨 Scanning Frontend..."
+docker run --rm -v $(pwd)/frontend:/app aquasec/trivy:latest fs /app --severity HIGH,CRITICAL
+
+echo ""
+echo "✅ Container Security Scan Complete!"
