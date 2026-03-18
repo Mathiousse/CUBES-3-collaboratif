@@ -6,7 +6,8 @@
     "start": "node index.js",
     "test": "jest --detectOpenHandles --forceExit",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --detectOpenHandles --forceExit"
+    "test:coverage": "jest --coverage --detectOpenHandles --forceExit",
+    "seed": "node scripts/seedUsers.js"
   },
   "jest": {
     "testEnvironment": "node",
