@@ -38,9 +38,9 @@ describe('CustomerDashboard Component', () => {
 
   test('renders customer dashboard and fetches data', async () => {
     render(<CustomerDashboard onLogout={mockOnLogout} />);
-    
+
     expect(screen.getByText('🍔 Good Food')).toBeInTheDocument();
-    
+
     await waitFor(() => {
       expect(menuService.getMenuItems).toHaveBeenCalled();
       expect(orderService.getMyOrders).toHaveBeenCalled();
@@ -49,7 +49,7 @@ describe('CustomerDashboard Component', () => {
 
   test('displays menu items', async () => {
     render(<CustomerDashboard onLogout={mockOnLogout} />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Burger')).toBeInTheDocument();
       expect(screen.getByText('Fries')).toBeInTheDocument();
@@ -60,11 +60,11 @@ describe('CustomerDashboard Component', () => {
 
   test('adds items to cart and opens cart modal', async () => {
     render(<CustomerDashboard onLogout={mockOnLogout} />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Burger')).toBeInTheDocument();
     });
-    
+
     const addButtons = screen.getAllByText('Ajouter');
     fireEvent.click(addButtons[0]);
 
@@ -80,14 +80,14 @@ describe('CustomerDashboard Component', () => {
 
   test('switches to orders view', async () => {
     render(<CustomerDashboard onLogout={mockOnLogout} />);
-    
+
     await waitFor(() => {
-      expect(screen.getByText('Notre Menu')).toBeInTheDocument();
+      expect(screen.getByText('Notre menu -CI/CD')).toBeInTheDocument();
     });
-    
+
     const ordersButton = screen.getByText('Mes Commandes');
     fireEvent.click(ordersButton);
-    
+
     await waitFor(() => {
       expect(screen.getByText(/Commande #/)).toBeInTheDocument();
       expect(screen.getByText(/Main St/)).toBeInTheDocument();
@@ -96,10 +96,10 @@ describe('CustomerDashboard Component', () => {
 
   test('calls logout when logout button is clicked', () => {
     render(<CustomerDashboard onLogout={mockOnLogout} />);
-    
+
     const logoutButton = screen.getByText('Déconnexion');
     fireEvent.click(logoutButton);
-    
+
     expect(mockOnLogout).toHaveBeenCalled();
   });
 });

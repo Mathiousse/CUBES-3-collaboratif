@@ -278,7 +278,7 @@ function CustomerDashboard({ onLogout }) {
         {view === 'menu' && (
           <div className="menu-view">
             <div className="menu-section">
-              <h2 className="menu-title">Notre Menu</h2>
+              <h2 className="menu-title">Notre menu -CI/CD</h2>
               <div className="menu-grid">
                 {menuItems.map((item) => (
                   <div key={item.id} className="menu-item">
