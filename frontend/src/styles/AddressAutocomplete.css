@@ -5,18 +5,21 @@
 
 .address-autocomplete input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: all 0.2s ease;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
   font-family: inherit;
+  box-sizing: border-box;
 }
 
 .address-autocomplete input:focus {
   outline: none;
-  border-color: #0f172a;
-  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
 }
 
 .loading-indicator {
@@ -24,13 +27,13 @@
   top: 100%;
   left: 0;
   right: 0;
-  padding: 10px 12px;
-  background: white;
-  border: 1px solid #e2e8f0;
+  padding: 10px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-top: none;
-  border-radius: 0 0 8px 8px;
-  font-size: 12px;
-  color: #64748b;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
   z-index: 1000;
 }
 
@@ -42,20 +45,20 @@
   margin: 4px 0 0 0;
   padding: 0;
   list-style: none;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   max-height: 280px;
   overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   z-index: 1000;
 }
 
 .suggestion-item {
-  padding: 12px;
+  padding: 12px 14px;
   cursor: pointer;
-  transition: background-color 0.1s ease;
-  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.1s;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .suggestion-item:last-child {
@@ -63,19 +66,19 @@
 }
 
 .suggestion-item:hover {
-  background-color: #f8fafc;
+  background: var(--color-bg);
 }
 
 .suggestion-label {
   display: block;
-  font-size: 14px;
-  color: #0f172a;
-  margin-bottom: 2px;
+  font-size: 0.9375rem;
   font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 2px;
 }
 
 .suggestion-context {
   display: block;
-  font-size: 12px;
-  color: #64748b;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
 }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Status - Good Food</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #fff; color: #000; }
+    h1 { font-size: 16px; margin: 0 0 20px 0; font-weight: normal; }
+    .ok { color: #22863a; }
+    .fail { color: #999; }
+    .time { color: #666; font-size: 12px; margin-top: 20px; }
+    .service { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <h1>SERVICES - Good Food (collaboratif)</h1>
+  <div id="status">Checking...</div>
+  <div class="time" id="time"></div>
+  <script>
+    const services = [
+      { name: 'API Gateway',    url: 'http://localhost:8080/health' },
+      { name: 'Auth API',       url: 'http://localhost:3001/health' },
+      { name: 'Logistique API', url: 'http://localhost:3002/health' },
+      { name: 'Commande API',   url: 'http://localhost:3003/health' },
+      { name: 'Frontend',       url: 'http://localhost:3000' }
+    ];
+
+    async function check(url) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+      try {
+        const r = await fetch(url, { mode: 'no-cors', signal: controller.signal });
+        clearTimeout(timeout);
+        return true;
+      } catch {
+        clearTimeout(timeout);
+        return false;
+      }
+    }
+
+    async function update() {
+      const results = await Promise.all(services.map(s => check(s.url)));
+      const el = document.getElementById('status');
+      el.innerHTML = services.map((s, i) => {
+        const ok = results[i];
+        return `<div class="service ${ok ? 'ok' : 'fail'}">[${ok ? 'OK' : '--'}] ${s.name}</div>`;
+      }).join('');
+      document.getElementById('time').textContent = new Date().toISOString();
+    }
+
+    update();
+    setInterval(update, 5000);
+  </script>
+</body>
+</html>

@@ -20,6 +20,8 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Auth-API connected to MongoDB'))
   .catch(err => console.error(err));
 
+app.get('/health', (req, res) => res.json({ status: 'ok', service: 'auth-api' }));
+
 app.use('/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 3001;

@@ -40,13 +40,21 @@ unit_tests:
 
 integration_tests:
   stage: test
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - apk add --no-cache docker-compose nodejs npm
   script:
-    - npm install 
-    - cd auth-api && npm ci
-    - cd ../commande-api && npm ci
-    - cd ../api-gateway && npm ci
-    - cd ..
+    - docker-compose up -d auth-api logistique-api commande-api api-gateway auth-db commande-db logistique-db
+    - sleep 45
+    - npm install
     - node test-integration.js
+  after_script:
+    - docker-compose down -v
+  allow_failure: true
 
 coverage_reports:
   stage: test

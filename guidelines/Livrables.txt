@@ -1,0 +1,86 @@
+# Livrables
+
+## Livrables
+
+---
+
+## Lancement du projet officiel
+
+08 novembre 2024
+
+Constitution des équipes
+
+Rédaction de la note de cadrage
+
+Le contexte
+
+Les objectifs
+
+Les parties prenantes
+
+La composition de lʼéquipe et les rôles
+
+---
+
+### Livrable 0 - Note de cadrage et décomposition du projet
+
+21 février 2025
+
+Contexte
+
+Objectifs
+
+Parties prenantes
+
+Composition des équipes / rôles
+
+La méthodologie de projet SCRUM avec un livret de suivi de chaque étape et des informations pertinentes par étapes
+
+Indicateurs de suivi
+
+Planification de projet
+
+---
+
+### Livrable 1 - Soutenance : Conception et préparation du projet
+
+19 mars 2025
+
+Architecture choisie et justifiée
+
+Modélisation de lʼarchitecture et des bases de données
+
+Maquette de lʼinterface web / mobile
+
+Mise en place et démo de la CI/CD
+
+Livret de suivi SCRUM
+
+Qualité de la présentation
+
+---
+
+### Livrable 2 - Soutenance : Développement de lʼapplication
+
+27 février 2026
+
+Démonstration du projet en architecture micro service
+
+POC API (tous les micro services + communication entre eux mais pas avec toutes les fonctionnalités)
+
+POC app web
+
+POC app mobile
+
+Focus sur la sécurité de lʼapplication
+
+Focus sur la qualité du code et de lʼapplication
+
+Axes dʼamélioration observés
+
+---
+
+File converted by pdf2txt
+https://github.com/SPACESODA/pdf2txt
+Converted at: 2026-03-18 07:08 UTC
+

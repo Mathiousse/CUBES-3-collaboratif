@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Auth from './components/Auth';
 import CustomerDashboard from './components/CustomerDashboard';
 import DeliveryDashboard from './components/DeliveryDashboard';
+import AdminDashboard from './components/AdminDashboard';
+import PWAPrompt from './components/PWAPrompt';
 import './App.css';
 
 function App() {
@@ -28,19 +30,22 @@ function App() {
     setUser(null);
   };
 
-  if (!user) {
-    return <Auth onLoginSuccess={handleLoginSuccess} />;
-  }
+  const renderDashboard = () => {
+    if (!user) return <Auth onLoginSuccess={handleLoginSuccess} />;
+    switch (user.role) {
+      case 'CUSTOMER': return <CustomerDashboard onLogout={handleLogout} />;
+      case 'DELIVERY_PERSON': return <DeliveryDashboard onLogout={handleLogout} />;
+      case 'ADMIN': return <AdminDashboard onLogout={handleLogout} />;
+      default: return <div>Unknown user role</div>;
+    }
+  };
 
-  if (user.role === 'CUSTOMER') {
-    return <CustomerDashboard onLogout={handleLogout} />;
-  }
-
-  if (user.role === 'DELIVERY_PERSON') {
-    return <DeliveryDashboard onLogout={handleLogout} />;
-  }
-
-  return <div>Unknown user role</div>;
+  return (
+    <>
+      <PWAPrompt />
+      {renderDashboard()}
+    </>
+  );
 }
 
 export default App;

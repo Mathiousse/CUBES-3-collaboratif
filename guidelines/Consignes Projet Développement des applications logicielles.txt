@@ -1,0 +1,131 @@
+# Consignes Projet Développement des applications logicielles
+
+## Consignes Projet Expérientiel Collaboratif
+Consignes Projet Développement des applications logicielles.docx
+
+Enoncé Titre du projet : Développement des applications logicielles Cf. Contexte du sujet (cas entreprise)
+
+Travail demandé/Livrable final Vous représentez l’équipe chargée de développer la solution logicielle de l’entreprise fictive décrite dans le contexte du sujet en annexe.
+Vous êtes dans la phase préparatoire. La direction veut s’assurer que les choix méthodologiques et techniques garantiront la livraison d’une application répondant aux exigences de qualité logicielle que des utilisateurs sont en droit d’attendre.
+La direction vous demande donc de lui présenter votre vision sur la démarche de développement et sur les différentes approches techniques.
+
+La durée de présentation est de 20 min suivi d’un échange avec le groupe de 15 minutes.
+La soutenance inclut des démonstrations obligatoires : Démonstration de deux solutions CI/CD et de deux technologies potentielles pour la réalisation de l’application.
+Vous consignerez vos différents schémas dans un support de type PPT.
+Les explications sur la comparaison des technologies peuvent être présentées durant la démonstration. Vous n’avez pas obligation de les intégrer dans le support.
+
+Voici les points qui doivent être présentés :
+
+1. Structuration du processus de développement
+Vous devez proposer une organisation permettant de livrer une application de qualité.
+
+- La sélection et la description des principaux attributs de qualité logicielle que la nouvelle application doit satisfaire
+(ex : performance, fiabilité, sécurité, etc.) Soyez clair sur la définition des attributs qualité.
+Vous devez justifier pourquoi ces attributs sont essentiels dans le contexte du sujet.
+
+- La Mise en place du cycle de vie de développement en mode Dev(Sec)Ops :
+Vous devez schématiser le cycle de vie du développement logiciel en prenant en compte la démarche Dev(Sec)Ops. Les différentes phases du cycle de vie (développement, tests, intégration, déploiement, monitoring, maintenance, etc.) doivent être expliquées.
+
+- L’identification des métiers impliqués et leurs interactions :
+Vous devez indiquer et définir des métiers clés (développeur, DevOps, architecte, sécurité, MOA…) nécessaires ont bon déroulement de la mise en place de l’application.
+Vous prendrez soin d’expliquer les interactions entre ces métiers.
+
+2. Étude et Comparaison des Technologies de développement et déploiement
+Il s’agit d’explorer et tester différentes technologies clés pour s’assurer que les solutions proposées sont viables.
+
+- Schématisation de l’architecture physique :
+Avant de comparer et tester les solutions techniques à mettre en œuvre vous devez fournir un schéma macroscopique de l’application pour mieux cerner les technologies à mettre en œuvre. Votre schéma doit identifier les principaux composants et leurs interactions pour répondre aux spécifications fonctionnelles et non fonctionnelles. Les responsabilités de chaque composant doivent être présentées durant la présentation. Ce
+
+Consignes Projet Développement des applications logicielles.docx Page 1/4
+## Consignes Projet Expérientiel Collaboratif
+Consignes Projet Développement des applications logicielles.docx
+
+schéma n’intègre pas les technologies (telles que les Frameworks, les types de SGBDRs, les protocoles de communication) utilisées.
+
+- Comparaison de 2 technologies pour le pipeline CI/CD :
+Vous devez sélectionner et comparer deux solutions CI/CD (ex. GitHub Actions vs GitLab CI, Jenkins vs ArgoCD…).
+Vous démontrez leur fonctionnement à travers une démonstration technique.
+Les forces, faiblesses et limites de chaque solution doivent être présentées.
+
+- Comparaison de 2 solutions techniques pour l’application :
+Vous Comparez deux solutions techniques par exemple (liste non exhaustive) : o Serveurs d’autorisation (ex. Keycloak vs Auth0) o Solutions locales Kubernetes (ex. Kind vs Minikube ou vs OpenShift Local) o Frameworks backend (ex. Spring Boot vs Cloud ou vs Quarkus ou vs ASP.NET Core) o Broker de messages (ex. RabbitMQ vs Kafka) o Etc.
+Les avantages, inconvénients et limitations de chacune des 2 solutions doivent être clairement présentés.
+Vous réalisez une démonstration comparative pour illustrer votre comparaison des deux technologies.
+
+- Présentation de l’architecture de l’environnement managé :
+Il faut présenter un schéma explicatif des composants clés de l’orchestrateur (ex. pour Kubernetes : control plane, etcd, controller Manager, worker nodes, kube-proxy, kubelet, etc.).
+
+- Définition des types de tests et leur intégration dans CI/CD :
+Vous indiquez les types de tests nécessaires (unitaires, intégration, charge, performance, etc.) permettant de vérifier la qualité de l’application. Leur place dans le pipeline CI/CD doit être indiquée. Il ne vous est pas demandé de présenter les outils et frameworks permettant de les mettre en œuvre.
+
+3. Politique de Sécurité
+Enfin vous proposez une approche globale de la sécurité applicative et organisationnelle.
+
+- Proposition d’une politique de sécurité :
+Vous présentez les axes principaux de la politique de sécurité qu’il faudra mettre en place pour garantir, non seulement, la protection de l’application à développer mais aussi les applications intégrées au SI ou qui le seront dans le futur.
+Votre proposition devra s’intégrer dans la démarche Dev(Sec)Ops et prendre en compte les éléments suivants : o L’inventaire du parc applicatif o La mise en place de scans de sécurité o La supervision des applications et infrastructures o L’analyse des risques et mise en place d’une technique de gestion des risques ou de gestion des incidents de sécurité.
+Expliquez comment votre approche s’intègre dans une démarche d’amélioration continue et renforce la sécurité tout au long du cycle de vie applicatif.
+
+4. Organisation d’équipe et Capitalisation de l’Expérience
+Il est important d’organiser votre travail en groupe mais aussi de prendre du recul sur l’organisation mise en place
+
+- Présentation de l’organisation interne du groupe
+Au démarrage de votre présentation vous présentez votre organisation avec un focus sur la répartition des rôles et des tâches sans oublier les outils collaboratifs utilisés.
+Consignes Projet Développement des applications logicielles.docx Page 2/4
+## Consignes Projet Expérientiel Collaboratif
+Consignes Projet Développement des applications logicielles.docx
+
+- Synthèse et capitalisation du travail en groupe
+En conclusion de votre présentation, vous synthétisez votre retour d’expérience sur la dynamique du groupe.
+Il faut aborder les difficultés rencontrées, les solutions mises en place, les axes d’amélioration.
+
+Déroulement et livrables intermédiaires 5 jours de travail en groupe + 1 jour pour les présentations orales et la restitution Le contexte et les consignes du projet collaboratif sont donnés au démarrage du bloc.
+
+DEROULEMENT
+
+Jour Etapes Livrables attendus Points de vigilance pilote Ne pas aller au-delà de 5 par groupe afin de garantir un travail équitable
+- Formation et organisation du groupe,
+J1 entre membre – un groupe de 3 est
+- prise en main du sujet
+idéal
+
+- Formalisation du processus de déploiementLa démarche deNe pas reprendre des schémas
+pour livrer une application répondant aux développement exigences de qualité logicielle J2
+- Choix des métiers nécessaires pour réaliser
+et déployer l’application
+- Schéma logique de l’application
+Il faut comparer par exemple 2
+- Comparaison et choix de 2 solutions CI/CD serveurs/ services d’autorisation ou 2
+et de 2 technologies pour réaliser brokers de messages … J3 l’application Démarrage de la mise en place des démonstrations techniques
+
+Poursuite mise en place des démonstrations J4 techniques
+
+- Finalisations des démonstrations -Les démonstrations Il faut privilégier un schéma fait
+- schématisation de la plateforme finalisées maison à un schéma trouver sur le
+J5d’orchestration Les schémas finalisésweb
+- Ebauche de la stratégie de sécurité -Le plan de sécurité
+
+Support de présentation J6 Soutenance orale (20 min de présentation +de type PPT et 15 min de Q/R) & restitution démonstrations
+
+Organisation Composition des groupes du projet collaboratif : 3 à 5 participants par groupe Les soutenances de groupe ont lieu je dernier jour dédié au projet collaboratif Le jury est composé du pilote et/ou d’un intervenant expert.
+
+Consignes Projet Développement des applications logicielles.docx Page 3/4
+## Consignes Projet Expérientiel Collaboratif
+Consignes Projet Développement des applications logicielles.docx
+
+Le travail de groupe sert de base pour préparer le travail individuel d’évaluation du bloc. Lors de la réalisation de votre travail individuel, vous pouvez approfondir, adapter ou changer les choix méthodologiques et techniques. Vous n’êtes pas obligé de reprendre les choix faits en groupe.
+
+Conseils Le sujet est ouvert. Vous pouvez donc ajouter des informations tant qu’elles ne contredisent pas le contexte du sujet.
+Profitez des jours d’autonomie du projet collaboratif pour travailler sur votre écrit d’évaluation du bloc.
+Il est conseillé de prévoir au moins 10 minutes sur les 20 minutes pour les démonstrations. Il faut donc bien scénariser la présentation.
+
+Pièces annexes Contexte du sujet Grille d’évaluation du projet collaboratif Concevoir l’architecture logicielle des SI
+
+Consignes Projet Développement des applications logicielles.docx Page 4/4
+
+---
+
+File converted by pdf2txt
+https://github.com/SPACESODA/pdf2txt
+Converted at: 2026-03-18 07:08 UTC
+

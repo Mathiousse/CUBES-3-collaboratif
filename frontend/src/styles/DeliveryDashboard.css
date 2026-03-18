@@ -1,12 +1,30 @@
 .delivery-dashboard {
   min-height: 100vh;
-  background: #f8fafc;
+  background: var(--color-bg);
+}
+
+.delivery-dashboard .orders-view {
+  margin-bottom: 32px;
+}
+
+.delivery-dashboard .orders-view h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  color: var(--color-text);
+}
+
+.delivery-dashboard .order-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 .orders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  gap: 20px;
 }
 
 @media (max-width: 768px) {
@@ -17,181 +35,182 @@
 
 .no-orders {
   text-align: center;
-  padding: 80px 20px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  padding: 64px 24px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .no-orders p {
-  font-size: 1.25rem;
-  margin: 10px 0;
-  color: #334155;
+  font-size: 1.125rem;
+  margin: 8px 0;
   font-weight: 600;
+  color: var(--color-text);
 }
 
 .no-orders .sub-text {
-  font-size: 0.95rem;
-  color: #94a3b8;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
 }
 
 .order-card {
-  background: white;
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  /* Subtle */
-  transition: all 0.2s ease;
+  background: var(--color-surface);
+  padding: 22px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s var(--ease-out), border-color 0.2s, transform 0.2s;
   display: flex;
   flex-direction: column;
 }
 
 .order-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  border-color: #cbd5e1;
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-border-strong);
 }
 
 .order-card.active-delivery {
-  border: 2px solid #0f172a;
-  /* Solid active state */
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
 }
 
 .order-body {
   flex: 1;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .order-items {
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .order-items h4 {
-  margin: 0 0 12px 0;
-  color: #64748b;
-  font-size: 0.8rem;
+  margin: 0 0 10px 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-weight: 700;
+  color: var(--color-text-muted);
 }
 
 .order-items p {
-  margin: 6px 0;
-  color: #334155;
+  margin: 5px 0;
+  font-size: 0.9375rem;
+  color: var(--color-text);
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.95rem;
 }
 
 .order-details {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .delivery-address {
-  color: #475569;
-  line-height: 1.6;
-  background: #f1f5f9;
-  padding: 16px;
-  border-radius: 8px;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  background: var(--color-bg);
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
   margin: 0;
-  font-size: 0.95rem;
+  border: 1px solid var(--color-border);
 }
 
 .delivery-address strong {
-  color: #0f172a;
+  color: var(--color-text);
   display: block;
   margin-bottom: 4px;
+  font-size: 0.8125rem;
 }
 
 .claim-btn,
 .update-status-btn {
   width: 100%;
-  padding: 14px;
-  background: #0f172a;
-  /* Solid Midnight Blue */
-  color: white;
+  padding: 12px 18px;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s var(--ease-out), transform 0.15s var(--ease-out);
 }
 
-.claim-btn:hover:not(:disabled),
+.claim-btn {
+  background: var(--color-header-bg);
+  color: var(--color-header-text);
+}
+
+.claim-btn:hover:not(:disabled) {
+  background: oklch(0.15 0.03 264);
+  transform: translateY(-1px);
+}
+
+.update-status-btn {
+  background: var(--color-primary);
+  color: white;
+}
+
 .update-status-btn:hover:not(:disabled) {
-  background: #1e293b;
+  background: var(--color-primary-hover);
   transform: translateY(-1px);
 }
 
 .claim-btn:disabled,
 .update-status-btn:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
-  background: #94a3b8;
-}
-
-.update-status-btn {
-  background: #059669;
-  /* Emerald 600 */
-}
-
-.update-status-btn:hover:not(:disabled) {
-  background: #047857;
+  background: var(--color-text-subtle);
+  transform: none;
 }
 
 .delivered-badge {
   width: 100%;
-  padding: 14px;
-  background: #16a34a;
-  /* Solid Green */
+  padding: 12px;
+  background: var(--color-success);
   color: white;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   text-align: center;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9375rem;
 }
 
 .no-map-message {
-  margin-top: 20px;
-  padding: 24px;
-  background: #f8fafc;
-  border-radius: 8px;
+  margin-top: 18px;
+  padding: 22px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
   text-align: center;
-  border: 1px dashed #cbd5e1;
+  border: 1px dashed var(--color-border);
 }
 
 .no-map-message p {
-  margin: 8px 0;
-  color: #64748b;
+  margin: 6px 0;
+  color: var(--color-text-muted);
   font-weight: 500;
+  font-size: 0.9375rem;
 }
 
 .no-map-message .sub-text {
-  font-size: 0.85rem;
-  color: #94a3b8;
+  font-size: 0.8125rem;
+  color: var(--color-text-subtle);
 }
 
 .completed-delivery {
-  opacity: 0.7;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  opacity: 0.75;
+  border-color: var(--color-border);
+  background: var(--color-bg);
 }
 
-/* Mini map preview for available orders */
 .mini-map-container {
-  margin-top: 16px;
-  border-radius: 8px;
+  margin-top: 14px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
 }
 
 .mini-map-container .leaflet-container {

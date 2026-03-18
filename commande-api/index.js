@@ -20,6 +20,8 @@ app.use(express.json());
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Commande-API connected to MongoDB'));
 
+app.get('/health', (req, res) => res.json({ status: 'ok', service: 'commande-api' }));
+
 app.use('/orders', authMiddleware, require('./routes/orders'));
 
 const PORT = process.env.PORT || 3003;

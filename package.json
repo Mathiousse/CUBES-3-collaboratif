@@ -7,7 +7,7 @@
     "test": "npm run test:integration",
     "test:integration": "node test-integration.js",
     "test:auth": "cd auth-api && npm test",
-    "test:logistics": "cd logistique-api && npm test",
+    "test:logistics": "cd logistique-api-nodejs-backup && npm test",
     "test:orders": "cd commande-api && npm test",
     "test:frontend": "cd frontend && npm test",
     "test:frontend:watch": "cd frontend && npm run test:watch",
@@ -15,12 +15,13 @@
     "test:frontend:e2e": "node test-frontend-e2e.js",
     "test:all-units": "npm run test:auth && npm run test:logistics && npm run test:orders",
     "test:all": "npm run test:all-units && npm run test:frontend && npm run test:integration && npm run test:frontend:e2e",
-    "test:coverage": "npm run test:auth && cd auth-api && npm run test:coverage && cd .. && cd commande-api && npm run test:coverage && cd .. && cd frontend && npm run test:coverage",
+    "test:coverage": "npm run test:auth && cd auth-api && npm run test:coverage && cd .. && cd logistique-api-nodejs-backup && npm run test && cd .. && cd commande-api && npm run test:coverage && cd .. && cd frontend && npm run test:coverage",
     "test:security": "npm audit --audit-level=high",
     "test:performance": "/mnt/c/ProgramData/chocolatey/bin/k6.exe run performance-test.js",
     "test:stress": "/mnt/c/ProgramData/chocolatey/bin/k6.exe run stress-test.js",
     "setup": "node setup-env.js",
     "verify": "node verify-setup.js",
+    "create-admin": "node scripts/create-admin.js",
     "docker:up": "docker-compose up --build",
     "docker:down": "docker-compose down -v",
     "docker:logs": "docker-compose logs -f"
@@ -29,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.13.1"
+    "axios": "^1.13.1",
+    "jest": "^30.2.0"
   }
 }

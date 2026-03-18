@@ -40,7 +40,7 @@ describe('DeliveryDashboard Component', () => {
   test('renders delivery dashboard and fetches orders', async () => {
     render(<DeliveryDashboard onLogout={mockOnLogout} />);
     
-    expect(screen.getByText('🚗 Good Food Delivery')).toBeInTheDocument();
+    expect(screen.getByText('🚗 Good Food Livraison')).toBeInTheDocument();
     
     await waitFor(() => {
       expect(orderService.getAvailableOrders).toHaveBeenCalled();
@@ -54,23 +54,27 @@ describe('DeliveryDashboard Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/Order #/)).toBeInTheDocument();
       expect(screen.getByText('123 Main St')).toBeInTheDocument();
-      expect(screen.getByText('$21.98')).toBeInTheDocument();
-      expect(screen.getByText('Claim Order')).toBeInTheDocument();
+      expect(screen.getByText('21.98€')).toBeInTheDocument();
+      expect(screen.getByText('Prendre la commande')).toBeInTheDocument();
     });
   });
 
   test('claims an order', async () => {
     orderService.claimOrder.mockResolvedValue({ data: {} });
-    orderService.getAvailableOrders.mockResolvedValue({ data: [] });
-    orderService.getMyOrders.mockResolvedValue({ data: [...mockMyOrders, mockAvailableOrders[0]] });
+    orderService.getAvailableOrders
+      .mockResolvedValueOnce({ data: mockAvailableOrders })
+      .mockResolvedValueOnce({ data: [] });
+    orderService.getMyOrders
+      .mockResolvedValueOnce({ data: mockMyOrders })
+      .mockResolvedValueOnce({ data: [...mockMyOrders, mockAvailableOrders[0]] });
 
     render(<DeliveryDashboard onLogout={mockOnLogout} />);
     
     await waitFor(() => {
-      expect(screen.getByText('Claim Order')).toBeInTheDocument();
+      expect(screen.getByText('Prendre la commande')).toBeInTheDocument();
     });
     
-    const claimButton = screen.getByText('Claim Order');
+    const claimButton = screen.getByText('Prendre la commande');
     fireEvent.click(claimButton);
 
     await waitFor(() => {
@@ -83,10 +87,10 @@ describe('DeliveryDashboard Component', () => {
     render(<DeliveryDashboard onLogout={mockOnLogout} />);
     
     await waitFor(() => {
-      expect(screen.getByText(/Available Orders/)).toBeInTheDocument();
+      expect(screen.getByText(/Commandes disponibles/)).toBeInTheDocument();
     });
     
-    const myDeliveriesButton = screen.getByText(/My Deliveries/);
+    const myDeliveriesButton = screen.getByText(/En cours/);
     fireEvent.click(myDeliveriesButton);
     
     await waitFor(() => {
@@ -99,14 +103,14 @@ describe('DeliveryDashboard Component', () => {
 
     render(<DeliveryDashboard onLogout={mockOnLogout} />);
     
-    const myDeliveriesButton = screen.getByText(/My Deliveries/);
+    const myDeliveriesButton = screen.getByText(/En cours/);
     fireEvent.click(myDeliveriesButton);
     
     await waitFor(() => {
-      expect(screen.getByText('Start Delivery')).toBeInTheDocument();
+      expect(screen.getByText('Démarrer la livraison')).toBeInTheDocument();
     });
     
-    const startButton = screen.getByText('Start Delivery');
+    const startButton = screen.getByText('Démarrer la livraison');
     fireEvent.click(startButton);
 
     await waitFor(() => {
@@ -120,14 +124,14 @@ describe('DeliveryDashboard Component', () => {
     render(<DeliveryDashboard onLogout={mockOnLogout} />);
     
     await waitFor(() => {
-      expect(screen.getByText(/No orders available right now!/)).toBeInTheDocument();
+      expect(screen.getByText(/Aucune commande disponible/)).toBeInTheDocument();
     });
   });
 
   test('calls logout when logout button is clicked', () => {
     render(<DeliveryDashboard onLogout={mockOnLogout} />);
     
-    const logoutButton = screen.getByText('Logout');
+    const logoutButton = screen.getByText('Déconnexion');
     fireEvent.click(logoutButton);
     
     expect(mockOnLogout).toHaveBeenCalled();

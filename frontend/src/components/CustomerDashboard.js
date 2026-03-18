@@ -4,7 +4,7 @@ import CheckoutForm from './CheckoutForm';
 import AddressAutocomplete from './AddressAutocomplete';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { ShoppingBag, Plus, Minus, LogOut, Utensils, MapPin, CreditCard } from 'lucide-react';
+import { ShoppingBag, ShoppingCart, Plus, Minus, LogOut, Utensils, MapPin, CreditCard, X } from 'lucide-react';
 import '../styles/CustomerDashboard.css';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY || 'pk_test_your_key');
@@ -19,6 +19,7 @@ function CustomerDashboard({ onLogout }) {
   const [checkoutData, setCheckoutData] = useState(null);
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [addressDetails, setAddressDetails] = useState(null);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     fetchMenuItems();
@@ -51,12 +52,18 @@ function CustomerDashboard({ onLogout }) {
   };
 
   // Helper to map product names to images (public folder paths)
-  const getImageUrl = (name) => {
-    const slug = name.toLowerCase();
-    if (slug.includes('classic') || slug.includes('beef')) return '/images/classic-burger.png';
-    if (slug.includes('vegan') || slug.includes('plant')) return '/images/veggie-burger.jpg';
-    if (slug.includes('fries') || slug.includes('frites')) return '/images/fries.jpg';
-    return 'https://placehold.co/400x300?text=Good+Food'; // Fallback
+  // Priority: database image > fallback mapping
+  const getImageUrl = (item) => {
+    // If item has image from database, use it
+    if (item.image) {
+      return item.image;
+    }
+    // Fallback to name-based mapping
+    const name = item.name.toLowerCase();
+    if (name.includes('classic') || name.includes('beef')) return '/images/classic-burger.png';
+    if (name.includes('vegan') || name.includes('plant')) return '/images/veggie-burger.jpg';
+    if (name.includes('fries') || name.includes('frites')) return '/images/fries.jpg';
+    return 'https://placehold.co/400x300?text=Good+Food';
   };
 
   const addToCart = (item) => {
@@ -93,6 +100,10 @@ function CustomerDashboard({ onLogout }) {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
   };
 
+  const getCartItemsCount = () => {
+    return cart.reduce((count, item) => count + item.quantity, 0);
+  };
+
   const handleCheckout = async () => {
     if (cart.length === 0) {
       alert('Votre panier est vide !');
@@ -123,6 +134,7 @@ function CustomerDashboard({ onLogout }) {
         orderId: response.data.order._id,
       });
       setView('payment');
+      setIsCartOpen(false);
     } catch (error) {
       console.error('Error creating order:', error);
       alert('Échec de la création de la commande. Veuillez réessayer.');
@@ -150,12 +162,78 @@ function CustomerDashboard({ onLogout }) {
     return colors[status] || '#95a5a6';
   };
 
+  const renderCartContent = () => {
+    if (cart.length === 0) {
+      return (
+        <div className="empty-cart">
+          <ShoppingBag size={48} color="#cbd5e1" style={{ marginBottom: '16px' }} />
+          <p>Votre panier est vide</p>
+        </div>
+      );
+    }
+
+    return (
+      <>
+        <div className="cart-items">
+          {cart.map((item) => (
+            <div key={item.id} className="cart-item">
+              <div className="cart-item-info">
+                <h4>{item.name}</h4>
+                <p>{item.price.toFixed(2)}€</p>
+              </div>
+              <div className="cart-item-actions">
+                <button
+                  onClick={() => removeFromCart(item.id)}
+                  className="quantity-btn"
+                >
+                  <Minus size={14} />
+                </button>
+                <span>{item.quantity}</span>
+                <button
+                  onClick={() => addToCart(item)}
+                  className="quantity-btn"
+                >
+                  <Plus size={14} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="cart-total">
+          <h3>Total</h3>
+          <span>{getCartTotal()}€</span>
+        </div>
+
+        <div className="delivery-address">
+          <label>
+            <MapPin size={16} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
+            Adresse de livraison
+          </label>
+          <AddressAutocomplete
+            value={deliveryAddress}
+            onChange={setDeliveryAddress}
+            onAddressSelect={setAddressDetails}
+          />
+        </div>
+
+        <button
+          onClick={handleCheckout}
+          className="checkout-btn"
+          disabled={loading}
+        >
+          <CreditCard size={18} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
+          {loading ? 'Traitement...' : 'Procéder au paiement'}
+        </button>
+      </>
+    );
+  };
+
   return (
     <div className="customer-dashboard">
-      <header className="dashboard-header">
+      <header className="dashboard-header customer-header">
         <div className="header-content">
-          <h1>🍔 Good Food</h1>
-          <div className="header-actions">
+          <h1 className="customer-logo">🍔 Good Food</h1>
+          <div className="header-actions header-actions-desk">
             <button
               onClick={() => setView('menu')}
               className={view === 'menu' ? 'active' : ''}
@@ -170,24 +248,42 @@ function CustomerDashboard({ onLogout }) {
               <ShoppingBag size={18} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
               Mes Commandes
             </button>
+            <button onClick={() => setIsCartOpen(true)} className="cart-btn" aria-label="Ouvrir le panier">
+              <ShoppingCart size={18} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
+              Panier
+              {getCartItemsCount() > 0 && <span className="cart-badge">{getCartItemsCount()}</span>}
+            </button>
             <button onClick={onLogout} className="logout-btn">
               <LogOut size={18} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
               Déconnexion
             </button>
           </div>
+          <div className="header-mobile-actions">
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="header-cart-mob"
+              aria-label="Ouvrir le panier"
+            >
+              <ShoppingCart size={22} />
+              {getCartItemsCount() > 0 && <span className="cart-badge cart-badge-mob">{getCartItemsCount()}</span>}
+            </button>
+            <button onClick={onLogout} className="logout-btn header-logout-mob" aria-label="Déconnexion">
+              <LogOut size={22} />
+            </button>
+          </div>
         </div>
       </header>
 
-      <main className="dashboard-main">
+      <main className="dashboard-main customer-main">
         {view === 'menu' && (
           <div className="menu-view">
             <div className="menu-section">
-              <h2>Notre Menu</h2>
+              <h2 className="menu-title">Notre Menu</h2>
               <div className="menu-grid">
                 {menuItems.map((item) => (
                   <div key={item.id} className="menu-item">
                     <div className="menu-item-image">
-                      <img src={getImageUrl(item.name)} alt={item.name} />
+                      <img src={getImageUrl(item)} alt={item.name} />
                     </div>
                     <div className="menu-item-content">
                       <h3>{item.name}</h3>
@@ -203,72 +299,6 @@ function CustomerDashboard({ onLogout }) {
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div className="cart-section">
-              <h2>
-                <ShoppingBag size={24} style={{ marginRight: '10px', verticalAlign: 'middle', color: '#0f172a' }} />
-                Mon Panier
-              </h2>
-              {cart.length === 0 ? (
-                <div className="empty-cart">
-                  <ShoppingBag size={48} color="#cbd5e1" style={{ marginBottom: '16px' }} />
-                  <p>Votre panier est vide</p>
-                </div>
-              ) : (
-                <>
-                  <div className="cart-items">
-                    {cart.map((item) => (
-                      <div key={item.id} className="cart-item">
-                        <div className="cart-item-info">
-                          <h4>{item.name}</h4>
-                          <p>{item.price.toFixed(2)}€</p>
-                        </div>
-                        <div className="cart-item-actions">
-                          <button
-                            onClick={() => removeFromCart(item.id)}
-                            className="quantity-btn"
-                          >
-                            <Minus size={14} />
-                          </button>
-                          <span>{item.quantity}</span>
-                          <button
-                            onClick={() => addToCart(item)}
-                            className="quantity-btn"
-                          >
-                            <Plus size={14} />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="cart-total">
-                    <h3>Total</h3>
-                    <span>{getCartTotal()}€</span>
-                  </div>
-
-                  <div className="delivery-address">
-                    <label>
-                      <MapPin size={16} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
-                      Adresse de livraison
-                    </label>
-                    <AddressAutocomplete
-                      value={deliveryAddress}
-                      onChange={setDeliveryAddress}
-                      onAddressSelect={setAddressDetails}
-                    />
-                  </div>
-
-                  <button
-                    onClick={handleCheckout}
-                    className="checkout-btn"
-                    disabled={loading}
-                  >
-                    <CreditCard size={18} style={{ marginRight: '8px', verticalAlign: 'text-bottom' }} />
-                    {loading ? 'Traitement...' : 'Procéder au paiement'}
-                  </button>
-                </>
-              )}
             </div>
           </div>
         )}
@@ -354,6 +384,55 @@ function CustomerDashboard({ onLogout }) {
           </div>
         )}
       </main>
+
+      {isCartOpen && (
+        <div className="cart-modal-overlay" onClick={() => setIsCartOpen(false)}>
+          <div
+            className="cart-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mon panier"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="cart-modal-header">
+              <h2>
+                <ShoppingBag size={22} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                Mon Panier
+              </h2>
+              <button
+                type="button"
+                className="cart-modal-close"
+                onClick={() => setIsCartOpen(false)}
+                aria-label="Fermer le panier"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="cart-modal-content">{renderCartContent()}</div>
+          </div>
+        </div>
+      )}
+
+      <nav className="customer-bottom-nav" aria-label="Navigation principale">
+        <button
+          type="button"
+          onClick={() => setView('menu')}
+          className={view === 'menu' ? 'active' : ''}
+          aria-current={view === 'menu' ? 'page' : undefined}
+        >
+          <Utensils size={22} />
+          <span>Menu</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setView('orders')}
+          className={view === 'orders' ? 'active' : ''}
+          aria-current={view === 'orders' ? 'page' : undefined}
+        >
+          <ShoppingBag size={22} />
+          <span>Mes commandes</span>
+        </button>
+      </nav>
     </div>
   );
 }

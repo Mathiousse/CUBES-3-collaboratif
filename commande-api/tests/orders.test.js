@@ -1,11 +1,13 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const Order = require('../models/Order');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'test_secret_key';
+process.env.JWT_SECRET = JWT_SECRET;
 
 jest.mock('stripe', () => {
   return jest.fn(() => ({
@@ -22,17 +24,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/orders-test';
+let mongoServer;
+
+jest.setTimeout(60000);
 
 beforeAll(async () => {
-  await mongoose.connect(MONGO_URI);
+  mongoServer = await MongoMemoryServer.create();
+  await mongoose.connect(mongoServer.getUri(), { dbName: 'orders-test' });
   const authMiddleware = require('../middleware/authMiddleware');
   app.use('/orders', authMiddleware, require('../routes/orders'));
 });
 
 afterAll(async () => {
   await Order.deleteMany({});
+  await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
+  await mongoServer.stop();
 });
 
 beforeEach(async () => {
@@ -172,7 +179,7 @@ describe('Order API Tests', () => {
       const deliveryToken = generateToken('delivery123', 'DELIVERY_PERSON');
 
       const response = await request(app)
-        .put(`/orders/${orderId}/claim`)
+        .post(`/orders/${orderId}/claim`)
         .set('x-auth-token', deliveryToken);
 
       expect(response.status).toBe(200);
@@ -184,7 +191,7 @@ describe('Order API Tests', () => {
       const customerToken = generateToken('customer123', 'CUSTOMER');
 
       const response = await request(app)
-        .put(`/orders/${orderId}/claim`)
+        .post(`/orders/${orderId}/claim`)
         .set('x-auth-token', customerToken);
 
       expect(response.status).toBe(403);
@@ -195,11 +202,11 @@ describe('Order API Tests', () => {
       const deliveryToken = generateToken('delivery123', 'DELIVERY_PERSON');
 
       await request(app)
-        .put(`/orders/${orderId}/claim`)
+        .post(`/orders/${orderId}/claim`)
         .set('x-auth-token', deliveryToken);
 
       const response = await request(app)
-        .put(`/orders/${orderId}/claim`)
+        .post(`/orders/${orderId}/claim`)
         .set('x-auth-token', deliveryToken);
 
       expect(response.status).toBe(400);

@@ -169,7 +169,7 @@ async function testDeliveryFlow() {
         email: deliveryEmail,
         password: deliveryPassword,
         name: 'Test Delivery',
-        role: 'DELIVERY',
+        role: 'DELIVERY_PERSON',
       });
       log('    ✓ Delivery person registered', 'success');
       testsPassed++;
@@ -189,7 +189,7 @@ async function testDeliveryFlow() {
       password: deliveryPassword,
     });
     
-    if (loginResponse.data.token && loginResponse.data.userId && loginResponse.data.role === 'DELIVERY') {
+    if (loginResponse.data.token && loginResponse.data.userId && loginResponse.data.role === 'DELIVERY_PERSON') {
       deliveryToken = loginResponse.data.token;
       log('    ✓ Delivery person logged in successfully', 'success');
       log(`    ✓ Role: ${loginResponse.data.role}`, 'success');

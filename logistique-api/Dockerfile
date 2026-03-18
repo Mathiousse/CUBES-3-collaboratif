@@ -21,25 +21,13 @@ COPY . /var/www/html
 RUN a2enmod rewrite
 RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/var || true
-RUN chmod +x /var/www/html/init-db.sh || true
-RUN chmod +x /var/www/html/bin/console || true
+# Set permissions & fix Windows line endings
+COPY start.sh /usr/local/bin/start.sh
+RUN sed -i 's/\r$//' /usr/local/bin/start.sh /var/www/html/init-db.sh \
+    && chmod +x /usr/local/bin/start.sh /var/www/html/init-db.sh \
+    && chmod +x /var/www/html/bin/console || true
 
 EXPOSE 80
-
-# Create startup script
-RUN echo '#!/bin/bash\n\
-if [ ! -d /var/www/html/vendor ]; then\n\
-  echo "Installing PHP dependencies..."\n\
-  cd /var/www/html && composer install --no-interaction --optimize-autoloader\n\
-fi\n\
-if [ ! -f /var/www/html/.db-initialized ]; then\n\
-  echo "First run - initializing database..."\n\
-  /var/www/html/init-db.sh\n\
-  touch /var/www/html/.db-initialized\n\
-fi\n\
-apache2-foreground' > /usr/local/bin/start.sh && chmod +x /usr/local/bin/start.sh
 
 CMD ["/usr/local/bin/start.sh"]
 

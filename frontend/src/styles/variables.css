@@ -1,0 +1,57 @@
+/* OKLCH design tokens – food app (warm, appetizing) */
+:root {
+  /* Primary – fresh green (order / add to cart) */
+  --color-primary: oklch(0.58 0.2 155);
+  --color-primary-hover: oklch(0.48 0.2 155);
+  --color-primary-muted: oklch(0.93 0.06 155);
+
+  /* Accent – warm amber (highlights, badges) */
+  --color-accent: oklch(0.72 0.16 55);
+  --color-accent-hover: oklch(0.62 0.16 55);
+
+  /* Surfaces – warm off-white for food app */
+  --color-bg: oklch(0.98 0.008 85);
+  --color-surface: oklch(1 0 0);
+  --color-surface-elevated: oklch(1 0 0);
+  --color-border: oklch(0.92 0.02 85);
+  --color-border-strong: oklch(0.86 0.03 85);
+
+  /* Text */
+  --color-text: oklch(0.22 0.02 264);
+  --color-text-muted: oklch(0.42 0.02 264);
+  --color-text-subtle: oklch(0.58 0.02 264);
+
+  /* Semantic */
+  --color-success: oklch(0.6 0.18 145);
+  --color-success-bg: oklch(0.96 0.04 145);
+  --color-error: oklch(0.55 0.22 25);
+  --color-error-bg: oklch(0.97 0.03 25);
+  --color-warning: oklch(0.75 0.15 85);
+
+  /* Header – warm dark for food brand */
+  --color-header-bg: oklch(0.24 0.04 35);
+  --color-header-text: oklch(0.98 0 0);
+  --color-header-muted: oklch(0.8 0.02 85);
+
+  /* Customer app: bottom nav & sticky cart bar */
+  --color-nav-bg: oklch(1 0 0);
+  --color-nav-border: oklch(0.92 0.02 85);
+  --color-cart-bar-bg: oklch(0.24 0.04 35);
+  --color-cart-bar-text: oklch(0.98 0 0);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+
+  /* Shadows – subtle, layered */
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-md: 0 4px 12px oklch(0 0 0 / 0.06);
+  --shadow-lg: 0 12px 40px oklch(0 0 0 / 0.08);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}

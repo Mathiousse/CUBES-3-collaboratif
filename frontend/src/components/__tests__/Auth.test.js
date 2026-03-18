@@ -16,19 +16,19 @@ describe('Auth Component', () => {
     render(<Auth onLoginSuccess={mockOnLoginSuccess} />);
     
     expect(screen.getByText('🍔 Good Food')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('your@email.com')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('votre@email.com')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument();
-    expect(screen.getByText('Login')).toBeInTheDocument();
+    expect(screen.getByText('Se connecter')).toBeInTheDocument();
   });
 
   test('switches to register form when register tab is clicked', () => {
     render(<Auth onLoginSuccess={mockOnLoginSuccess} />);
     
-    const registerTab = screen.getAllByText('Register')[0];
+    const registerTab = screen.getByText('Inscription');
     fireEvent.click(registerTab);
     
-    expect(screen.getByPlaceholderText('Your name')).toBeInTheDocument();
-    expect(screen.getByText('I am a...')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Votre nom')).toBeInTheDocument();
+    expect(screen.getByText('Je suis...')).toBeInTheDocument();
   });
 
   test('handles successful login', async () => {
@@ -43,14 +43,14 @@ describe('Auth Component', () => {
 
     render(<Auth onLoginSuccess={mockOnLoginSuccess} />);
     
-    fireEvent.change(screen.getByPlaceholderText('your@email.com'), {
+    fireEvent.change(screen.getByPlaceholderText('votre@email.com'), {
       target: { value: 'test@example.com' }
     });
     fireEvent.change(screen.getByPlaceholderText('••••••••'), {
       target: { value: 'password123' }
     });
     
-    const loginButton = screen.getByRole('button', { name: 'Login' });
+    const loginButton = screen.getByRole('button', { name: 'Se connecter' });
     fireEvent.click(loginButton);
 
     await waitFor(() => {
@@ -67,25 +67,25 @@ describe('Auth Component', () => {
 
     render(<Auth onLoginSuccess={mockOnLoginSuccess} />);
     
-    const registerTab = screen.getAllByText('Register')[0];
+    const registerTab = screen.getByText('Inscription');
     fireEvent.click(registerTab);
     
-    fireEvent.change(screen.getByPlaceholderText('Your name'), {
+    fireEvent.change(screen.getByPlaceholderText('Votre nom'), {
       target: { value: 'John Doe' }
     });
-    fireEvent.change(screen.getByPlaceholderText('your@email.com'), {
+    fireEvent.change(screen.getByPlaceholderText('votre@email.com'), {
       target: { value: 'john@example.com' }
     });
     fireEvent.change(screen.getByPlaceholderText('••••••••'), {
       target: { value: 'password123' }
     });
     
-    const createButton = screen.getByRole('button', { name: 'Create Account' });
+    const createButton = screen.getByRole('button', { name: 'Créer un compte' });
     fireEvent.click(createButton);
 
     await waitFor(() => {
       expect(authService.register).toHaveBeenCalled();
-      expect(screen.getByText(/Account created/)).toBeInTheDocument();
+      expect(screen.getByText(/Compte créé/)).toBeInTheDocument();
     });
   });
 
@@ -96,14 +96,14 @@ describe('Auth Component', () => {
 
     render(<Auth onLoginSuccess={mockOnLoginSuccess} />);
     
-    fireEvent.change(screen.getByPlaceholderText('your@email.com'), {
+    fireEvent.change(screen.getByPlaceholderText('votre@email.com'), {
       target: { value: 'wrong@example.com' }
     });
     fireEvent.change(screen.getByPlaceholderText('••••••••'), {
       target: { value: 'wrongpass' }
     });
     
-    const loginButton = screen.getByRole('button', { name: 'Login' });
+    const loginButton = screen.getByRole('button', { name: 'Se connecter' });
     fireEvent.click(loginButton);
 
     await waitFor(() => {

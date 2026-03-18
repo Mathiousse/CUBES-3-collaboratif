@@ -42,7 +42,12 @@ function Auth({ onLoginSuccess }) {
         setError('Compte créé ! Veuillez vous connecter.');
       }
     } catch (err) {
-      setError(err.response?.data || 'Une erreur est survenue. Veuillez réessayer.');
+      const raw = err.response?.data;
+      const message =
+        typeof raw === 'string'
+          ? raw
+          : (raw?.message ?? raw?.error ?? (raw && JSON.stringify(raw))) || 'Une erreur est survenue. Veuillez réessayer.';
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -133,7 +138,7 @@ function Auth({ onLoginSuccess }) {
           )}
 
           {error && (
-            <div className={`message ${isLogin && error.includes('créé') ? 'success' : 'error'}`}>
+            <div className={`message ${isLogin && String(error).includes('créé') ? 'success' : 'error'}`}>
               {error}
             </div>
           )}

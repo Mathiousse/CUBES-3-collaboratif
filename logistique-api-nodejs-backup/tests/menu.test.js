@@ -1,5 +1,6 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const express = require('express');
 const cors = require('cors');
 
@@ -7,16 +8,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/logistics-test';
+let mongoServer;
 
-const MenuItem = mongoose.model('MenuItem', new mongoose.Schema({
-    name: String,
-    description: String,
-    price: Number,
+jest.setTimeout(60000);
+
+const MenuItem = mongoose.models.MenuItem || mongoose.model('MenuItem', new mongoose.Schema({
+  name: String,
+  description: String,
+  price: Number
 }));
 
 beforeAll(async () => {
-  await mongoose.connect(MONGO_URI);
+  mongoServer = await MongoMemoryServer.create();
+  await mongoose.connect(mongoServer.getUri(), { dbName: 'logistics-test' });
   
   app.get('/menu-items', async (req, res) => {
     const items = await MenuItem.find();
@@ -26,7 +30,9 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await MenuItem.deleteMany({});
+  await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
+  await mongoServer.stop();
 });
 
 beforeEach(async () => {

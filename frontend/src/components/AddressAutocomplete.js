@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import '../styles/AddressAutocomplete.css';
-
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+import { API_BASE_URL } from '../config/apiBaseUrl';
 
 function AddressAutocomplete({ value, onChange, onAddressSelect }) {
   const [suggestions, setSuggestions] = useState([]);
@@ -29,7 +28,7 @@ function AddressAutocomplete({ value, onChange, onAddressSelect }) {
 
       setLoading(true);
       try {
-        const response = await axios.get(`${API_URL}/address/search`, {
+        const response = await axios.get(`${API_BASE_URL}/address/search`, {
           params: { q: value, limit: 5 }
         });
         setSuggestions(response.data.features || []);

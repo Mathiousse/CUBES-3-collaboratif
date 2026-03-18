@@ -1,5 +1,6 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const express = require('express');
 const cors = require('cors');
 const User = require('../models/User');
@@ -8,16 +9,23 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/auth-test';
+process.env.JWT_SECRET = process.env.JWT_SECRET || 'test_secret_key';
+
+let mongoServer;
+
+jest.setTimeout(60000);
 
 beforeAll(async () => {
-  await mongoose.connect(MONGO_URI);
+  mongoServer = await MongoMemoryServer.create();
+  await mongoose.connect(mongoServer.getUri(), { dbName: 'auth-test' });
   app.use('/auth', require('../routes/auth'));
 });
 
 afterAll(async () => {
   await User.deleteMany({});
+  await mongoose.connection.dropDatabase();
   await mongoose.connection.close();
+  await mongoServer.stop();
 });
 
 beforeEach(async () => {

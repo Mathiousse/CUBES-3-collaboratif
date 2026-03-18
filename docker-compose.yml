@@ -32,6 +32,12 @@ services:
       - DATABASE_URL=postgresql://logistics_user:logistics_pass@logistique-db:5432/logistics_db?serverVersion=15&charset=utf8
     depends_on:
       - logistique-db
+    volumes:
+      - ./logistique-api/src:/var/www/html/src
+      - ./logistique-api/config:/var/www/html/config
+      - ./logistique-api/migrations:/var/www/html/migrations
+      - ./logistique-api/init-db.sh:/var/www/html/init-db.sh
+      - logistique_var:/var/www/html/var
 
   logistique-db:
     image: postgres:15-alpine
@@ -82,7 +88,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_API_URL=http://localhost:8080/api
+      - REACT_APP_API_URL=/api
+      - API_PROXY_TARGET=http://api-gateway:8080
       - REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_51SPKQcPZCiOqc0pUajNftFBGv7Zu2KKUB4TCD9KucmdpYeLejb86p6DQUsN5UUlMEG5Kz8ichicHCaXShHqnJSCT00pWWrHNTP
       - WATCHPACK_POLLING=true
       - CHOKIDAR_USEPOLLING=true
@@ -95,6 +102,7 @@ services:
 volumes:
   auth_data:
   logistique_data:
+  logistique_var:
   commande_data:
 
 

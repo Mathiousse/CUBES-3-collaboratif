@@ -1,0 +1,309 @@
+   Référence bloc de
+                                               INFMAALSIA2
+      compétences :                                                                                         0
+
+
+
+
+         Nom bloc de
+                                 Développement des applications logicielles
+       compétences :                                                                                        0
+
+                                                                                                                Veuillez
+                                                                                                                ne pas
+                                                                                                                toucher
+                                                                                                                aux
+                                                                                                                formules
+                                                                                                                de
+                                                                                                                calculs
+                                                                                                                présentes
+                                                                                                                dans la
+                                                                                                                grille
+
+Promotion
+                                                               Date :
+:
+
+                                                                       Coef
+                                                                   1           2
+                                                                 Note        Note
+                                  Nom-Prénom                   collective individuelle
+                                                                                             Note* finale
+
+Candidat 1                                                                               0
+Candidat 2                                                                               0
+Candidat 3                                                                               0
+Candidat 4                                                                               0
+Candidat 5                                                                               0
+Candidat 6                                                                               0
+
+
+                 A : Acquis :
+                 les objectifs
+               *
+                 définis sont
+                 atteints
+                 B : Acquis :
+                 les objectifs
+                 définis sont
+                 partiellement
+                 atteints -
+                 écarts
+                 mineurs
+                 constatés
+                 C : Non
+                 acquis : les
+                 objectifs
+                 définis ne
+                 sont pas
+                 atteints -
+                 écarts
+                 majeurs
+                 constatés
+                 D : Non
+                 acquis : les
+                 objectifs
+                 définis ne
+                 sont pas
+                 atteints -
+                 écarts
+                 critiques
+                 constatés
+
+                                  Nom-Prénom                             Signature
+
+Evaluateur 1
+
+
+Evaluateur 2
+Evaluateur 3
+
+
+Commentaires
+:
+
+
+
+
+                                                     NOTATION DU TRAVAIL COLLECTIF
+
+
+                                                                                            Points à Points
+   Thèmes                                          Critères                                 attribuer obtenus
+                                                                                                                Commentaires/Argumentations
+
+
+                     l'architecture physique présente les principaux composants et leur
+                     interaction (regroupement des composants métiers logiques au
+                                                                                               2
+                     sein de services physiques, interaction entre les composants et
+                     systèmes de BDD et/ou de messagerie, etc.)
+
+
+   Maintenir et
+ développer son
+   expertise en 2 plateformes CI/CD sont expérimentées. Leur démonstration met                 3
+ développement en avant les avantages et inconvénients de chacune d'elles
+  d’applications
+
+
+
+                     2 solutions techniques permettant de mettre en œuvre l'application
+                     à développer sont expérimentées. Leur démonstration met en                3
+                     avant les avantages et inconvénients de chacune d'elles
+
+
+
+
+                     Le schéma du cycle de vie de développement de logiciel de
+                     l'application a développer présente les différentes phases. Il tient
+                     compte de la démarche DevSecOps. Il est cohérent avec les                 2
+                     consignes du sujet. L'explication des phases permet de
+                     comprendre le cycle de vie dans son intégralité
+
+
+     Piloter le
+développement et
+ le déploiement
+  d’applications les métiers nécessaires à la mise en œuvre de l'applications sont             1
+                 décrits. Les interactions entre ces métiers sont expliqués
+
+
+
+
+                     l'architecture interne de l'environnement managé est schématisée
+                     et présente les composants / services clés techniques.
+                                                                                               2
+                     L'explication du schéma permet de comprendre le fonctionnement
+                     de cet environnement.
+
+
+
+                     les principaux attributs de qualité logicielle que l'application à
+                     développer doit satisfaire sont définis. Ils sont cohérents avec le       1
+                     contexte du sujet.
+
+
+
+
+                     les différents types de tests sont correctement positionnés dans le
+                     pipeline CI/CD proposé. Leur présentation met en avant la                 2
+                     validation des exigences de qualité logicielle de l'application.
+  Élaborer le
+   processus
+  d’assurance
+qualité logicielle
+                 les axes principaux de la politique de sécurité proposée
+                 garantissent la protection du SI dans lequel l'application à
+                                                                                             2
+                 développer est intégrée. La politique de sécurité prend en compte
+                 le principe d'amélioration continue
+
+
+
+
+                 La présentation du groupe permet de comprendre comment le
+                 groupe s'est organisé. Un bilan faisant apparaitre les points forts et      1
+                 les axes d'amélioration du groupe est présenté.
+  Présentation
+     orale
+
+
+                 La présentation est fluide et professionnelle. Le support de
+                                                                                             1
+                 présentation est adapté à un professionnel IT.
+
+
+                                                                                                                             Note
+                                                                                                                           (lettre)
+                                                                                Total :     20                         collective :
+
+
+                                                            De 16 à 20                    De 12 à 15.99         De 8 à 11.99          De 0 à 7.99
+     Conversion lettre
+                                                               =A                              =B                   =C                    =D
+
+
+
+
+                                                             NOTATION INDIVIDUELLE
+
+                                                            De 10 à 12                      De 7 à 9.99         De 5 à 6.99           De 0 à 4.99
+     Conversion lettre
+                                                               =A                               =B                  =C                    =D
+
+
+
+Candidat 1
+                                                                                          Points à Points
+   Thèmes                                          Critères                               attribuer obtenus
+                                                                                                              Commentaires/Argumentations
+                 Participation individuelle et efficacité                                    2
+ Compétences
+  techniques Maîtrise des outils                                                             3
+                 Réaction face à un imprévu                                                  4
+
+ Qualité de la Animation, prise en compte de l’auditoire                                     2
+prestation orale
+                 Les réponses aux questions sont argumentées et justifiées                   1
+                                                                                                                             Note
+                                                                                                                           (lettre)
+                                                                                                                      individuelle
+                                                                                Total :     12                                    :
+
+
+Candidat 2
+                                                                                          Points à Points
+   Thèmes                                          Critères                               attribuer obtenus
+                                                                                                              Commentaires/Argumentations
+                 Participation individuelle et efficacité                                    2
+ Compétences
+  techniques Maîtrise des outils                                                             3
+                 Réaction face à un imprévu                                                  4
+
+ Qualité de la Animation, prise en compte de l’auditoire                                     2
+prestation orale
+                 Les réponses aux questions sont argumentées et justifiées                   1
+                                                                                                                             Note
+                                                                                                                           (lettre)
+                                                                                                                      individuelle
+                                                                                Total :     12                                    :
+
+
+Candidat 3
+                                                                                          Points à Points
+   Thèmes                                          Critères                               attribuer obtenus
+                                                                                                              Commentaires/Argumentations
+                 Participation individuelle et efficacité                                    2
+ Compétences
+  techniques Maîtrise des outils                                                             3
+                 Réaction face à un imprévu                                                  4
+
+ Qualité de la Animation, prise en compte de l’auditoire                                     2
+prestation orale
+                 Les réponses aux questions sont argumentées et justifiées                   1
+                                                                                                                             Note
+                                                                                                                           (lettre)
+                                                                                                                      individuelle
+                                                                                Total :     12                                    :
+                                                             De 10 à 12                   De 7 à 9.99         De 5 à 6.99           De 0 à 4.99
+     Conversion lettre
+                                                                =A                            =B                  =C                    =D
+
+
+
+Candidat 4
+                                                                                        Points à Points
+   Thèmes                                           Critères                            attribuer obtenus
+                                                                                                            Commentaires/Argumentations
+                  Participation individuelle et efficacité                                 2
+ Compétences
+  techniques Maîtrise des outils                                                           3
+                  Réaction face à un imprévu                                               4
+
+ Qualité de la Animation, prise en compte de l’auditoire
+                                                                                           2
+prestation orale
+                  Les réponses aux questions sont argumentées et justifiées                1
+                                                                                                                           Note
+                                                                                                                         (lettre)
+                                                                                                                    individuelle
+                                                                              Total :     12                                    :
+
+
+Candidat 5
+                                                                                        Points à Points
+   Thèmes                                           Critères                            attribuer obtenus
+                                                                                                            Commentaires/Argumentations
+                  Participation individuelle et efficacité                                 2
+ Compétences
+  techniques Maîtrise des outils                                                           3
+                  Réaction face à un imprévu                                               4
+                  Animation, prise en compte de l’auditoire
+ Qualité de la                                                                             2
+prestation orale Les réponses aux questions sont argumentées et justifiées
+                                                                                           1
+                                                                                                                           Note
+                                                                                                                         (lettre)
+                                                                                                                    individuelle
+                                                                              Total :     12                                    :
+
+
+Candidat 6
+                                                                                        Points à Points
+   Thèmes                                           Critères                            attribuer obtenus
+                                                                                                            Commentaires/Argumentations
+                  Participation individuelle et efficacité                                 2
+ Compétences
+  techniques Maîtrise des outils                                                           3
+                  Réaction face à un imprévu                                               4
+
+ Qualité de la Animation, prise en compte de l’auditoire
+                                                                                           2
+prestation orale
+                  Les réponses aux questions sont argumentées et justifiées                1
+                                                                                                                           Note
+                                                                                                                         (lettre)
+                                                                                                                    individuelle
+                                                                              Total :     12                                    :
+

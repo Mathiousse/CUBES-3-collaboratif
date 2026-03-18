@@ -22,6 +22,9 @@ class MenuItem
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private string $price;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,17 @@ class MenuItem
         return $this;
     }
 
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+        return $this;
+    }
+
     public function toArray(): array
     {
         return [
@@ -67,6 +81,7 @@ class MenuItem
             'name' => $this->name,
             'description' => $this->description,
             'price' => (float) $this->price,
+            'image' => $this->image,
         ];
     }
 }

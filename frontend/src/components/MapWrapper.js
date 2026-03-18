@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -8,7 +8,7 @@ const MapBoundsUpdater = ({ coordinates }) => {
   useEffect(() => {
     if (coordinates && coordinates.length > 0) {
       const bounds = L.latLngBounds(coordinates);
-      map.fitBounds(bounds, { padding: [50, 50] });
+      map.fitBounds(bounds, { padding: [50, 50], animate: false });
     }
   }, [coordinates, map]);
 
@@ -16,24 +16,18 @@ const MapBoundsUpdater = ({ coordinates }) => {
 };
 
 function MapWrapper({ orderId, center, markers, route, allCoordinates }) {
-  const [mapKey, setMapKey] = useState(Date.now());
-
-  useEffect(() => {
-    // Generate completely new key when orderId changes
-    setMapKey(Date.now());
-  }, [orderId]);
-
-  const mapId = `map-container-${mapKey}`;
-
   return (
-    <div key={mapKey} id={mapId} style={{ position: 'relative', height: '400px', width: '100%' }}>
+    <div id={`map-container-${orderId}`} style={{ position: 'relative', height: '400px', width: '100%' }}>
       <MapContainer
-        key={mapKey}
+        key={orderId}
         center={center}
         zoom={13}
         scrollWheelZoom={false}
         style={{ height: '100%', width: '100%', borderRadius: '8px' }}
         attributionControl={false}
+        zoomAnimation={false}
+        fadeAnimation={false}
+        markerZoomAnimation={false}
       >
         {/* Option 1: CartoDB Light (Clean, minimal, gray tones) */}
         <TileLayer

@@ -11,6 +11,9 @@ app.use(helmet());
 app.use(cors()); // CORS must be first to handle preflights/errors correctly
 
 
+app.get('/health', (req, res) => res.json({ status: 'ok', service: 'api-gateway' }));
+app.get('/api/health', (req, res) => res.json({ status: 'ok', service: 'api-gateway' }));
+
 // Address autocomplete - direct proxy to French government API
 app.get('/api/address/search', async (req, res) => {
   try {
@@ -39,8 +42,13 @@ app.use('/api/logistique', createProxyMiddleware({
   changeOrigin: true,
   timeout: 30000,
   proxyTimeout: 30000,
+  pathRewrite: { '^/api/logistique': '' },
   onProxyReq: (proxyReq, req, res) => {
     console.log('[Logistique Proxy]', req.method, req.url, '→', proxyReq.path);
+  },
+  onError: (err, req, res) => {
+    console.error('[Logistique Proxy Error]', err.message);
+    res.status(502).json({ error: 'Logistics service unavailable' });
   }
 }));
 
